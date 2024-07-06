@@ -1,5 +1,6 @@
 package br.com.portifolio.jira.tarefas.entidades;
 
+import br.com.portifolio.jira.tarefas.dto.CadastroTarefaRequestDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 
@@ -43,5 +45,8 @@ public class Tarefa {
     @Column(nullable = true)
     private StatusTarefa status;
 
-
+    public Tarefa(CadastroTarefaRequestDTO dto) {
+        BeanUtils.copyProperties(dto, this);
+        this.dataCriacao = LocalDateTime.now();
+    }
 }

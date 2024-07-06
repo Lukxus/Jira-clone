@@ -4,36 +4,34 @@ import br.com.portifolio.jira.tarefas.dto.CadastroTarefaRequestDTO;
 import br.com.portifolio.jira.tarefas.dto.CadastroTarefaResponseDTO;
 import br.com.portifolio.jira.tarefas.entidades.Tarefa;
 import br.com.portifolio.jira.tarefas.repository.TarefaRepository;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TarefaService {
 
-    @Resource
+    @Autowired
     private TarefaRepository tarefaRepository;
 
-    public CadastroTarefaResponseDTO cadastraTarefa(CadastroTarefaRequestDTO cadastroTarefaRequestDTO) {
-
-        Tarefa tarefa = new Tarefa();
-        tarefa.setTitulo(cadastroTarefaRequestDTO.getTitulo());
-        tarefa.setDescricao(cadastroTarefaRequestDTO.getDescricao());
-        tarefa.setDataCriacao(cadastroTarefaRequestDTO.getDataCriacao());
-        tarefa.setDataAtivacao(cadastroTarefaRequestDTO.getDataAtivacao());
-        tarefa.setDataFinalizacao(cadastroTarefaRequestDTO.getDataFinalizacao());
-        tarefa.setStatus(cadastroTarefaRequestDTO.getStatus());
-
+    public CadastroTarefaResponseDTO cadastraTarefa(CadastroTarefaRequestDTO dto) {
+        Tarefa tarefa = new Tarefa(dto);
         Tarefa tarefaSalva = tarefaRepository.save(tarefa);
+        return mapToResponseDTO(tarefaSalva);
+    }
 
+    public List<CadastroTarefaResponseDTO> getAllTarefas() {
+        List<Tarefa> tarefas = tarefaRepository.findAll();
+        return tarefas.stream().map(this::mapToResponseDTO).collect(Collectors.toList());
+    }
+
+    private CadastroTarefaResponseDTO mapToResponseDTO(Tarefa tarefa) {
         CadastroTarefaResponseDTO responseDTO = new CadastroTarefaResponseDTO();
-        responseDTO.setId(tarefaSalva.getId());
-        responseDTO.setTitulo(tarefaSalva.getTitulo());
-        responseDTO.setDescricao(tarefaSalva.getDescricao());
-        responseDTO.setDataCriacao(tarefaSalva.getDataCriacao());
-        responseDTO.setDataAtivacao(tarefaSalva.getDataAtivacao());
-        responseDTO.setDataFinalizacao(tarefaSalva.getDataFinalizacao());
-        responseDTO.setStatus(tarefaSalva.getStatus());
-
+        BeanUtils.copyProperties(tarefa, responseDTO);
         return responseDTO;
     }
 }
