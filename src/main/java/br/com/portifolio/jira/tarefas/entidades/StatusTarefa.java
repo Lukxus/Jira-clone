@@ -1,4 +1,4 @@
-package br.com.portifolio.jira.model;
+package br.com.portifolio.jira.tarefas.entidades;
 
 public enum StatusTarefa {
 

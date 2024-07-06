@@ -1,5 +1,4 @@
-package br.com.portifolio.jira.model;
-
+package br.com.portifolio.jira.tarefas.entidades;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode
 @Getter
@@ -20,12 +19,29 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Epico {
+public class Tarefa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 100, nullable = false)
+    private String titulo;
+
+    @Column(length = 300, nullable = false)
+    private String descricao;
+
+    @Column(nullable = false)
+    private LocalDateTime dataCriacao;
+
     @Column(nullable = true)
-    private List<Tarefa> tarefas;
+    private LocalDateTime dataAtivacao;
+
+    @Column(nullable = true)
+    private LocalDateTime dataFinalizacao;
+
+    @Column(nullable = true)
+    private StatusTarefa status;
+
+
 }
