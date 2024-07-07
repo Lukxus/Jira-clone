@@ -1,11 +1,8 @@
 package br.com.portifolio.jira.tarefas.entidades;
 
+import br.com.portifolio.jira.projetos.entidades.Projeto;
 import br.com.portifolio.jira.tarefas.dto.CadastroTarefaRequestDTO;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,6 +41,10 @@ public class Tarefa {
 
     @Column(nullable = true)
     private StatusTarefa status;
+
+    @ManyToOne
+    @JoinColumn(name = "projeto_id")
+    private Projeto projeto;
 
     public Tarefa(CadastroTarefaRequestDTO dto) {
         BeanUtils.copyProperties(dto, this);

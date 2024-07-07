@@ -12,4 +12,5 @@ public class CadastroTarefaRequestDTO {
     private String titulo;
     private String descricao;
     private StatusTarefa status;
+    private Long projetoId; // Adiciona o ID do projeto
 }
