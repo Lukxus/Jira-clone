@@ -1,5 +1,6 @@
 package br.com.portifolio.jira.usuarios.dto;
 
+import br.com.portifolio.jira.usuarios.entidades.RolesEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UsuarioRequestDTO {
     private String nome;
-    private String email;
-    private String senha; // Campo para senha
+    private String login;
+    private RolesEnum roles;
+    private String password; // Campo para senha
 }
