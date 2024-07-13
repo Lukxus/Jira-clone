@@ -37,8 +37,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/v1/usuarios/**").permitAll()
-                                .requestMatchers("/api/v1/login").permitAll()
+                                .requestMatchers("/api/v1/usuarios", "/api/v1/login").permitAll() // Permite acesso público aos endpoints de registro e login
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement ->
