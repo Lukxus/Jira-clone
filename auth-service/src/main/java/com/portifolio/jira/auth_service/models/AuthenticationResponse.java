@@ -1,2 +1,10 @@
-package com.portifolio.jira.auth_service.models;public class AuthenticationResponse {
+package com.portifolio.jira.auth_service.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class AuthenticationResponse {
+    private String token;
 }
