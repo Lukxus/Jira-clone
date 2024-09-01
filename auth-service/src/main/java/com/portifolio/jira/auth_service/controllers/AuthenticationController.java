@@ -1,8 +1,8 @@
 package com.portifolio.jira.auth_service.controllers;
 
 import com.portifolio.jira.auth_service.infra.security.TokenService;
-import com.portifolio.jira.auth_service.models.AuthenticationRequest;
-import com.portifolio.jira.auth_service.models.AuthenticationResponse;
+import com.portifolio.jira.auth_service.models.dto.AuthenticationRequestDTO;
+import com.portifolio.jira.auth_service.models.dto.AuthenticationResponseDTO;
 import com.portifolio.jira.auth_service.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +24,12 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity login(@RequestBody AuthenticationRequestDTO authenticationRequest) throws Exception {
         var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationRequest.getLogin(), authenticationRequest.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 
-        return ResponseEntity.ok(new AuthenticationResponse(token));
+        return ResponseEntity.ok(new AuthenticationResponseDTO(token));
     }
 }
